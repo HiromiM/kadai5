@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style>body{padding:0;margin:0;background:#333;}h1{padding:0;margin:0;font-size:50%;color:white;}.mouse{font-size:50%;background: white;}</style>
+    </head>
+    <body>
+    
+    
+    <!-- MAP[START] -->
+   
+    <div id="myMap" style='position:relative;width:100%;height:450px;'></div>
+    <!-- MAP[END] -->
+
+<!-- [ Pushpin Object ] https://msdn.microsoft.com/en-us/library/mt712673.aspx -->
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AngarlD5BPkMIL6-V2KbWAvZAM690FJUeINal_g_YxTw73dsRLb3n9Sc-cnlFwoo' async defer></script>
+<script>
+    function GetMap() {
+        let map = new Microsoft.Maps.Map('#myMap', {
+            center: new Microsoft.Maps.Location(34.73664, 135.16705), //Location center position
+        });
+
+        //Get MAP Infomation
+        let center = map.getCenter();
+
+        //Create custom Pushpin
+        let pin = new Microsoft.Maps.Pushpin(center, {
+            color: 'red',            //Color
+            enableClickedStyle:true, //Click
+            enableHoverStyle:true,   //MouseOver
+            visible:true             //show/hide
+        });
+
+        //Add the pushpin to the map
+        map.entities.push(pin);
+        
+        let infobox= new Microsoft.Maps.Infobox(center,{
+            title:'六甲の館',
+            description: '特別養護老人ホーム'
+        });
+        infobox.setMap(map);
+    }
+
+    
+    //Select MapTypeID
+    //***********************************************************************************
+    document.getElementById("type").onchange = function(){
+        typeid = this.value; //selectboxの値を取得
+        if(typeid == "load") type = {mapTypeId: Microsoft.Maps.MapTypeId.load};
+        if(typeid == "aerial") type = {mapTypeId: Microsoft.Maps.MapTypeId.aerial};
+        if(typeid == "canvasDark") type = {mapTypeId: Microsoft.Maps.MapTypeId.canvasDark};
+        if(typeid == "canvasLight") type = {mapTypeId: Microsoft.Maps.MapTypeId.canvasLight};
+        
+        //add type
+        map.setView(type);
+    }
+</script>
+</body>
+</html>
